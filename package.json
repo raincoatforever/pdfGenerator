@@ -1,0 +1,27 @@
+{
+  "name": "node-js-getting-started",
+  "version": "0.0.1",
+  "description": "A pdf generator with REST interface",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "phantom": "*",
+    "phantom-html-to-pdf": "*"
+  },
+  "engines": {
+    "node": "0.12.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raincoatforever/pdfGenerator.git"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
+}
