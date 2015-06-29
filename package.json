@@ -9,7 +9,8 @@
   "dependencies": {
     "express": "*",
     "phantom": "*",
-    "phantom-html-to-pdf": "*"
+    "phantom-html-to-pdf": "*",
+    "mu2": "*"
   },
   "engines": {
     "node": "0.12.2"
