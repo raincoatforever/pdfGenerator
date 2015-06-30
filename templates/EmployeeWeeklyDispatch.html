@@ -3,22 +3,33 @@
 		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="styles.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 		<h3>{{title}}</h3>
-		<table style="border:5px black">
-			<tr>
+		<table class="table table-bordered">
+			{{#data}}
+			<tr id="table-header">
 				<th>Name</th>
 				<th>Trade</th>
 				<th>Employee</th>
-				{{#data}}
 				{{#datesArray}} 
 				<th>{{src}}</th> 
 				{{/datesArray}}
-				{{/data}}
 			</tr>
-			
+
+			{{#employees}}
+			<tr>
+				<td>{{name}}</td>
+				<td>{{trade}}</td>
+				<td>{{emp_id}}</td>
+				{{#work_sites}}
+				<td>{{site}}</td>
+				{{/work_sites}}
+			</tr>
+			{{/employees}}
+			{{/data}}
 		</table>
 	</body>
 

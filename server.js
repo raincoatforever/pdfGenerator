@@ -12,8 +12,6 @@ var mu = require('mu2');
 
 mu.root = __dirname + '/templates'
 
-
-var data2="";
 app.post('/trial', function (req, res) {
 
     var jsonPostBody="";
@@ -31,15 +29,13 @@ app.post('/trial', function (req, res) {
         };
 
         console.log(jsonObj.rdata);
-        // var data = {brands: obj.data['dates'].map(function(x){ return {name: x}; })};
-        var data2 = "";
+        var renderedHtml = "";
         mu.compileAndRender('employeeWeeklyDispatch.html', jsonObj.rdata)
-            .on('data', function (data1) {
-                //console.log(data1.toString());
-                data2 += data1.toString();
+            .on('data', function (renderedData) {
+                renderedHtml += renderedData.toString();
             })
             .on('end', function (){
-                conversion({ html: data2.toString() }, function(err, pdf) {
+                conversion({html: renderedHtml.toString()}, function(err, pdf) {
                     console.log(pdf.numberOfPages);
                     pdf.stream.pipe(res);
                 });
