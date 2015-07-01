@@ -8,70 +8,11 @@ var TABLE_HEADER_NAME = "Name";
 var TABLE_HEADER_TRADE = "Trade";
 var TABLE_HEADER_EMPLOYEE_ID = "Employee ID";
 
+var jsonObjForConversion = "{\"rtype\":\"employeeWeeklyDispatch\",\r\n\"rdata\":{\"title\":\"Employee Dispatch Report : Bay Area Concrete\", \"week_range\":\"Week Ending 2015-06-13\",\"data\":{\"dates\":[\"Sun 6\/7\",\"Mon 6\/8\",\"Tue 6\/9\",\"Wed 6\/10\", \"Thu 6\/11\", \"Fri 6\/12\", \"Sat 6\/13\"], \"employees\":[{\"emp_id\": 131000,\"trade\":\"Carpenter\", \"name\":\"Alexis Romero\",\"work_sites\":[{\"date\":\"Sun 6\/7\", \"site\": \"\"},{\"date\": \"Mon 6\/8\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Tue 6\/9\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Wed 6\/10\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Thu 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Fri 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Sat 6\/12\", \"site\":\"Genentech 9 Seismic Upgrade\"}]},{\"emp_id\": 131899,\"trade\":\"Mason\", \"name\":\"Alvaro Diaz\",\"work_sites\":[{\"date\":\"Sun 6\/7\", \"site\": \"\"},{\"date\": \"Mon 6\/8\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Tue 6\/9\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Wed 6\/10\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Thu 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Fri 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Sat 6\/12\", \"site\":\"Genentech 9 Seismic Upgrade\"}]}]}}}"; 
+
 var mu = require('mu2'); 
 
 mu.root = __dirname + '/templates'
-
-app.post('/trial', function (req, res) {
-
-    var jsonPostBody="";
-    req.on('data', function(chunk) {
-      jsonPostBody = jsonPostBody + chunk;
-    });
-    
-    req.on('end', function() {
-        var jsonObj = JSON.parse(jsonPostBody.toString());
-
-        jsonObj.rdata.data.datesArray = function(){
-            return this.dates.map(function (date) {
-                return {src: date};
-            });
-        };
-
-        console.log(jsonObj.rdata);
-        var renderedHtml = "";
-        mu.compileAndRender('employeeWeeklyDispatch.html', jsonObj.rdata)
-            .on('data', function (renderedData) {
-                renderedHtml += renderedData.toString();
-            })
-            .on('end', function (){
-                conversion({html: renderedHtml.toString()}, function(err, pdf) {
-                    console.log(pdf.numberOfPages);
-                    pdf.stream.pipe(res);
-                });
-            });
-    });
-});
-
-app.get('/', function (req, res) {
-    conversion({ html: "<h1>Hello World</h1>" }, function(err, pdf) {
-    console.log(pdf.numberOfPages);
-    pdf.stream.pipe(res);
-    });
-});
-
-app.post('/pdfGenerate', function(req, res){
-    //var htmlPostBody = req.body;
-    var jsonPostBody="";
-    req.on('data', function(chunk) {
-      console.log("Received body data:");
-      console.log(chunk.toString());
-      jsonPostBody = jsonPostBody + chunk;
-    });
-    
-    req.on('end', function() {
-        
-        //console.log(jsonPostBody);
-        var html = createHTMLFromJSON(jsonPostBody.toString());
-        
-        conversion({ html: html }, function(err, pdf) {
-            console.log(pdf.numberOfPages);
-            pdf.stream.pipe(res);
-        });
-          
-    });
-});
-
 
 var server = app.listen(3000, function () {
 
@@ -82,71 +23,58 @@ var server = app.listen(3000, function () {
 
 });
 
+app.get('/pussy', function (req, res) {
+    var jsonPostBody= jsonObjForConversion.toString();
+    console.log(jsonPostBody);
+    createHTMLFromJSON(jsonPostBody.toString(), res);
+});
 
-function createHTMLFromJSON(jsonData) {
+function createHTMLFromJSON(jsonData, res) {
     var jsonObj = JSON.parse(jsonData);
     var reportType = jsonObj.rtype;
 
     var htmlBody;
     switch(reportType) {
         case REPORT_TYPE_EMPLOYEE_DISPATCH_A:
-            htmlBody = GenerateReportEmployeeDispatchA(jsonObj.rdata);
+            GenerateReportEmployeeWeeklyDispatch(jsonObj, res);
             break;
-        default:
-            htmlBody = "<body></body>";
     }
-
-    var html = "<html>"
-        + HTML_HEAD 
-        + htmlBody
-        + "</html>";
-
-    return html;
 }
-    
-function GenerateReportEmployeeDispatchA(jsonObj) {
-    var reportData = jsonObj.data;
-    var title = jsonObj.title;
 
-    var dateArray = reportData.dates;
-    console.log(dateArray);
+function GenerateReportEmployeeWeeklyDispatch(jsonObj, res) {
 
-    var tableHeaders = "<tr>"
-        + "<th>" + TABLE_HEADER_TRADE + "</th>"
-        + "<th>" + TABLE_HEADER_EMPLOYEE_ID + "</th>"
-        + "<th>" + TABLE_HEADER_NAME + "</th>";
+    // convert array to map-array
+        jsonObj.rdata.data.datesArray = function() {
+            return this.dates.map(function (date) {
+                return {src: date};
+            });
+        };
 
-    for (var i = 0; i < dateArray.length; i++) {
-        tableHeaders += "<th>" + dateArray[i] + "</th>";
-    }
+        // add color according to trade
+        jsonObj.rdata.data.employeesArray = function() {
+            return this.employees.map(function (employee) {
+                var color = "#ffffff";
+                if (employee.trade.toLowerCase() == "Carpenter".toLowerCase()) {
+                    color = "#66ffff";
+                } else if (employee.trade.toLowerCase() == "Mason".toLowerCase()) {
+                    color = "#ffff00";
+                } else if (employee.trade.toLowerCase() == "Laborer".toLowerCase()) {
+                    color = "#66ff66";
+                }
+                
+                employee.color = color;
+                return employee;
+            });
+        };
 
-    tableHeaders += "</tr>";
-
-    var employees = reportData.employees;
-
-    var tableRows = "<tbody>";
-    for (var i =  0; i < employees.length; i++) {
-        var employee = employees[i];
-        var employeeId = employee.emp_id;
-        var trade = employee.trade;
-        var name = employee.name;
-        var workSites = employee.work_sites;
-
-        tableRows += "<tr>";
-        tableRows += "<td>" + trade + "</td>";
-        tableRows += "<td>" + employeeId + "</td>";
-        tableRows += "<td>" + name + "</td>";
-        
-        // workSites can be mapped to headers using dates, for now it is associated with dateArray    
-        for (var j = 0; j < dateArray.length; j++) {
-            tableRows += "<td>" + workSites[j].site + "</td>";
-        }
-        tableRows += "</tr>"
-    }
-
-    tableRows += "</tbody>";
-
-    var table = "<table class=\"table table-bordered\">" + tableHeaders + tableRows +"</table>";
-    var htmlBody = "<body>" + table + "</body>";
-    return htmlBody;
+        var renderedHtml = "";
+        mu.compileAndRender('employeeWeeklyDispatch.html', jsonObj.rdata)
+            .on('data', function (renderedData) {
+                renderedHtml += renderedData.toString();
+            })
+            .on('end', function (){
+                //console.log(renderedHtml.toString());
+                res.contentType('text/html');
+                res.send(renderedHtml);
+            });
 }
