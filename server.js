@@ -14,7 +14,7 @@ var mu = require('mu2');
 
 mu.root = __dirname + '/templates'
 
-var server = app.listen(3000, function () {
+var server = app.listen(process.env.PORT || 3000, function () {
 
   var host = server.address().address;
   var port = server.address().port;
@@ -24,9 +24,9 @@ var server = app.listen(3000, function () {
 });
 
 app.get('/pussy', function (req, res) {
-    var jsonPostBody= jsonObjForConversion.toString();
-    console.log(jsonPostBody);
-    createHTMLFromJSON(jsonPostBody.toString(), res);
+  var jsonPostBody= jsonObjForConversion.toString();
+  console.log(jsonPostBody);
+  createHTMLFromJSON(jsonPostBody.toString(), res);
 });
 
 function createHTMLFromJSON(jsonData, res) {
