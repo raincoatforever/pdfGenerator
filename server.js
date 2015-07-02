@@ -1,4 +1,9 @@
 var express = require('express');
+var fs = require('fs');
+var pdf = require('html-pdf');
+var options = { format: 'Letter' };
+
+
 var app = express();
 var conversion = require("phantom-html-to-pdf")();
 
@@ -28,6 +33,26 @@ app.get('/pussy', function (req, res) {
   console.log(jsonPostBody);
   createHTMLFromJSON(jsonPostBody.toString(), res);
 });
+
+app.post('/pdfGenerate', function(req, res){
+    //var htmlPostBody = req.body;
+    var jsonPostBody="";
+    req.on('data', function(chunk) {
+      console.log("Received body data:");
+      console.log(chunk.toString());
+      jsonPostBody = jsonPostBody + chunk;
+    });
+    
+    req.on('end', function() {
+        
+        //console.log(jsonPostBody);
+        createHTMLFromJSON(jsonPostBody.toString(), res);
+        
+        
+          
+    });
+});
+
 
 function createHTMLFromJSON(jsonData, res) {
     var jsonObj = JSON.parse(jsonData);
@@ -74,7 +99,12 @@ function GenerateReportEmployeeWeeklyDispatch(jsonObj, res) {
             })
             .on('end', function (){
                 //console.log(renderedHtml.toString());
-                res.contentType('text/html');
-                res.send(renderedHtml);
+                //res.contentType('text/html');
+                console.log(renderedHtml);
+                conversion({ html: renderedHtml }, function(err, pdf) {
+                    console.log(pdf.numberOfPages);
+                    pdf.stream.pipe(res);
+                });
+                //res.send(renderedHtml);
             });
 }
