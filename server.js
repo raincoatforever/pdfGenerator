@@ -1,7 +1,4 @@
 var express = require('express');
-var fs = require('fs');
-var pdf = require('html-pdf');
-var options = { format: 'Letter' };
 
 
 var app = express();
@@ -59,8 +56,8 @@ function createHTMLFromJSON(jsonData, res) {
     var reportType = jsonObj.rtype;
 
     var htmlBody;
-    switch(reportType) {
-        case REPORT_TYPE_EMPLOYEE_DISPATCH_A:
+    switch(reportType.toLowerCase()) {
+        case REPORT_TYPE_EMPLOYEE_DISPATCH_A.toLowerCase():
             GenerateReportEmployeeWeeklyDispatch(jsonObj, res);
             break;
     }
@@ -68,6 +65,7 @@ function createHTMLFromJSON(jsonData, res) {
 
 function GenerateReportEmployeeWeeklyDispatch(jsonObj, res) {
 
+jsonObj.rdata.header_color = "#6495ed";
     // convert array to map-array
         jsonObj.rdata.data.datesArray = function() {
             return this.dates.map(function (date) {
