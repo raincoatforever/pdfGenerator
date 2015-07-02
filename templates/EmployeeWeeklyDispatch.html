@@ -11,7 +11,7 @@
 		<h4>{{week_range}}</h4>
 		<table class="table table-bordered">
 			{{#data}}
-			<tr style="background-color:#6495ed">
+			<tr style="background-color:#6495ed !important;">
 				<th>Name</th>
 				<th>Trade</th>
 				<th>Employee</th>
@@ -23,7 +23,7 @@
 			{{#employeesArray}}
 			<tr>
 				<td>{{name}}</td>
-				<td style="background-color:{{color}}">{{trade}}</td>
+				<td style="background-color:{{color}} !important;">{{trade}}</td>
 				<td>{{emp_id}}</td>
 				{{#work_sites}}
 				<td>{{site}}</td>
