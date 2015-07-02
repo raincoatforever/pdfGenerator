@@ -68,7 +68,7 @@ function GenerateReportEmployeeWeeklyDispatch(jsonObj, res) {
         };
 
         var renderedHtml = "";
-        mu.compileAndRender('employeeWeeklyDispatch.html', jsonObj.rdata)
+        mu.compileAndRender('EmployeeWeeklyDispatch.html', jsonObj.rdata)
             .on('data', function (renderedData) {
                 renderedHtml += renderedData.toString();
             })
