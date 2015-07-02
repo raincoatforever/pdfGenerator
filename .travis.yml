@@ -7,3 +7,6 @@ deploy:
   provider: heroku
   api_key: "940c7da3-2bf5-4255-9258-d80c43b44e82"
   app: fast-springs-4854
+
+after_deploy:
+  - node server.js
