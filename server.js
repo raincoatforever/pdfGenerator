@@ -31,6 +31,11 @@ app.get('/pussy', function (req, res) {
   createHTMLFromJSON(jsonPostBody.toString(), res);
 });
 
+app.get('/healthcheck', function (req, res) {
+  res.sendStatus(200);
+  res.end();
+});
+
 app.post('/pdfGenerate', function(req, res){
     //var htmlPostBody = req.body;
     var jsonPostBody="";
@@ -101,6 +106,7 @@ jsonObj.rdata.header_color = "#6495ed";
                 console.log(renderedHtml);
                 conversion({ html: renderedHtml }, function(err, pdf) {
                     console.log(pdf.numberOfPages);
+                    res.setHeader("Content-Type", "application/pdf");
                     pdf.stream.pipe(res);
                 });
                 //res.send(renderedHtml);
