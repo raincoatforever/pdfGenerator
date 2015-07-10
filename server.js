@@ -1,7 +1,4 @@
 var express = require('express');
-var fs = require('fs');
-var pdf = require('html-pdf');
-var options = { format: 'Letter' };
 
 
 var app = express();
@@ -32,6 +29,11 @@ app.get('/pussy', function (req, res) {
   var jsonPostBody= jsonObjForConversion.toString();
   console.log(jsonPostBody);
   createHTMLFromJSON(jsonPostBody.toString(), res);
+});
+
+app.get('/healthcheck', function (req, res) {
+  res.sendStatus(200);
+  res.end();
 });
 
 app.post('/pdfGenerate', function(req, res){
@@ -104,6 +106,7 @@ function GenerateReportEmployeeWeeklyDispatch(jsonObj, res) {
                 console.log(renderedHtml);
                 conversion({ html: renderedHtml }, function(err, pdf) {
                     console.log(pdf.numberOfPages);
+                    res.setHeader("Content-Type", "application/pdf");
                     pdf.stream.pipe(res);
                 });
                 //res.send(renderedHtml);
