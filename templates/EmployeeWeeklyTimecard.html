@@ -1,0 +1,180 @@
+<html>
+	<head>
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		{{#data}}
+		{{#employees}}
+		<table class="table table-bordered text-center">
+			<tr>
+				<th rowspan="3">Employee<br>Name</th>
+				<th rowspan="3">Job<br>Name</th> 
+				<th rowspan="3">Job<br>Number</th> 
+				<th rowspan="3">Phase<br>Code</th>
+				<th rowspan="3">Phase Code<br>Description</th>
+				<th rowspan="3">Loc-<br>ation</th>
+				<th rowspan="3">Task</th>
+				{{#days}}
+				<th colspan="2">{{sat}}</th>
+				<th>{{sun}}</th>
+				<th colspan="3">{{mon}}</th>
+				<th colspan="3">{{tue}}</th>
+				<th colspan="3">{{wed}}</th>
+				<th colspan="3">{{thu}}</th>
+				<th colspan="3">{{fri}}</th>
+				{{/days}}
+				<th rowspan="3">T#</th>
+				<th rowspan="3">Notes</th>
+			</tr>
+			<tr>
+				<th colspan="2">Sat</th>
+				<th>Sun</th>
+				<th colspan="3">Mon</th>
+				<th colspan="3">Tue</th>
+				<th colspan="3">Wed</th>
+				<th colspan="3">Thu</th>
+				<th colspan="3">Fri</th>
+			</tr>
+			<tr>
+				<!-- Sat -->
+				<th class="text-center" style="padding:1px; !important">OT</th>
+				<th class="text-center" style="padding:1px; !important">DT</th>
+				<!-- Sun -->
+				<th class="text-center" style="padding:1px; !important">DT</th>
+				<!-- Mon -->
+				<th class="text-center" style="padding:1px; !important">ST</th>
+				<th class="text-center" style="padding:1px; !important">OT</th>
+				<th class="text-center" style="padding:1px; !important">DT</th>
+				<!-- Tue -->
+				<th class="text-center" style="padding:1px; !important">ST</th>
+				<th class="text-center" style="padding:1px; !important">OT</th>
+				<th class="text-center" style="padding:1px; !important">DT</th>
+				<!-- Wed -->
+				<th class="text-center" style="padding:1px; !important">ST</th>
+				<th class="text-center" style="padding:1px; !important">OT</th>
+				<th class="text-center" style="padding:1px; !important">DT</th>
+				<!-- Thu -->
+				<th class="text-center" style="padding:1px; !important">ST</th>
+				<th class="text-center" style="padding:1px; !important">OT</th>
+				<th class="text-center" style="padding:1px; !important">DT</th>
+				<!-- Fri -->
+				<th class="text-center" style="padding:1px; !important">ST</th>
+				<th class="text-center" style="padding:1px; !important">OT</th>
+				<th class="text-center" style="padding:1px; !important">DT</th>
+			</tr>
+			{{#firstJob}}
+			<tr>
+				<td rowspan="{{noOfJobs}}">{{emp_name}}</td> 
+				<td>{{name}}</td> 
+				<td>{{number}}</td> 
+				<td>{{phase_code}}</td>
+				<td>{{phase_code_desc}}</td>
+				<td>{{location}}</td>
+				<td>{{task}}</td>
+				{{#hours}}
+				<!-- Sat -->
+				{{#sat}}
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/sat}}
+				<!-- Sun -->
+				{{#sun}}
+				<td>{{dt}}</td>
+				{{/sun}}
+				<!-- Mon -->
+				{{#mon}}
+				<td>{{st}}</td>
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/mon}}
+				<!-- Tue -->
+				{{#tue}}
+				<td>{{st}}</td>
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/tue}}
+				<!-- Wed -->
+				{{#wed}}
+				<td>{{st}}</td>
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/wed}}
+				<!-- Thu -->
+				{{#thu}}
+				<td>{{st}}</td>
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/thu}}
+				<!-- Fri -->
+				{{#fri}}
+				<td>{{st}}</td>
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/fri}}
+				{{/hours}}
+				<td>{{jobHours}}</td>
+				<td>{{notes}}</td>
+			</tr>
+			{{/firstJob}}
+			{{#jobs}}
+			<tr>
+				<td>{{name}}</td> 
+				<td>{{number}}</td> 
+				<td>{{phase_code}}</td>
+				<td>{{phase_code_desc}}</td>
+				<td>{{location}}</td>
+				<td>{{task}}</td>
+				{{#hours}}
+				<!-- Sat -->
+				{{#sat}}
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/sat}}
+				<!-- Sun -->
+				{{#sun}}
+				<td>{{dt}}</td>
+				{{/sun}}
+				<!-- Mon -->
+				{{#mon}}
+				<td>{{st}}</td>
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/mon}}
+				<!-- Tue -->
+				{{#tue}}
+				<td>{{st}}</td>
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/tue}}
+				<!-- Wed -->
+				{{#wed}}
+				<td>{{st}}</td>
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/wed}}
+				<!-- Thu -->
+				{{#thu}}
+				<td>{{st}}</td>
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/thu}}
+				<!-- Fri -->
+				{{#fri}}
+				<td>{{st}}</td>
+				<td>{{ot}}</td>
+				<td>{{dt}}</td>
+				{{/fri}}
+				{{/hours}}
+				<td>{{jobHours}}</td>
+				<td>{{notes}}</td>
+			</tr>
+			{{/jobs}}
+		</table>
+		{{/employees}}
+		{{/data}}
+	</body>
+
+</html>
