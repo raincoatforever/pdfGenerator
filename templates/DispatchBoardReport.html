@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+		<!-- <link type="text/css" rel="stylesheet" href="styles.css"> -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+
+	$("body").ready(function () {
+    $("table").each(function () {
+        var $this = $(this);
+        var newrows = [];
+        $this.find("tr").each(function () {
+            var i = 0;
+            $(this).find("td,th").each(function () {
+                i++;
+                if (newrows[i] === undefined) {
+                    newrows[i] = $("<tr></tr>");
+                }
+                newrows[i].append($(this));
+            });
+        });
+        $this.find("tr").remove();
+        $.each(newrows, function () {
+            $this.append(this);
+        });
+    });
+
+    return false;
+});
+
+		</script>
+	</head>
+	
+	<body>
+		<h3>{{title}}</h3>
+
+		<table class="table table-bordered">
+			{{#data}}
+			<tr>
+				<td>{{site}}</td>
+			{{#employeesArray}}
+				<td style="background-color:{{color}} !important;">{{name}} <br> {{id}}</td>
+			{{/employeesArray}}
+			</tr>
+			{{/data}}
+		</table>
+
+
+	</body>
+
+</html>
