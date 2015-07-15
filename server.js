@@ -11,25 +11,27 @@ var REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD = "employeeWeeklyTimecard";
 var TABLE_HEADER_NAME = "Name";
 var TABLE_HEADER_TRADE = "Trade";
 var TABLE_HEADER_EMPLOYEE_ID = "Employee ID";
+var TEMPLATES_PATH = "/templates";
+
+var COLOR_DEFAULT = "#ffffff";
+var COLOR_CARPETER = "#66ffff";
+var COLOR_MASON = "#ffff00";
+var COLOR_LABORER = "#66ff66";
 
 var jsonObjForConversion = "{\"rtype\":\"employeeWeeklyDispatch\",\r\n\"rdata\":{\"title\":\"Employee Dispatch Report : Bay Area Concrete\", \"week_range\":\"Week Ending 2015-06-13\",\"data\":{\"dates\":[\"Sun 6\/7\",\"Mon 6\/8\",\"Tue 6\/9\",\"Wed 6\/10\", \"Thu 6\/11\", \"Fri 6\/12\", \"Sat 6\/13\"], \"employees\":[{\"emp_id\": 131000,\"trade\":\"Carpenter\", \"name\":\"Alexis Romero\",\"work_sites\":[{\"date\":\"Sun 6\/7\", \"site\": \"\"},{\"date\": \"Mon 6\/8\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Tue 6\/9\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Wed 6\/10\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Thu 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Fri 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Sat 6\/12\", \"site\":\"Genentech 9 Seismic Upgrade\"}]},{\"emp_id\": 131899,\"trade\":\"Mason\", \"name\":\"Alvaro Diaz\",\"work_sites\":[{\"date\":\"Sun 6\/7\", \"site\": \"\"},{\"date\": \"Mon 6\/8\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Tue 6\/9\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Wed 6\/10\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Thu 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Fri 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Sat 6\/12\", \"site\":\"Genentech 9 Seismic Upgrade\"}]}]}}}"; 
-
-//var dispatchBoardTestingString = "{\n  \"rtype\": \"DispatchBoardReport\",\n  \"rdata\": {\n    \"title\": \"Week from --- to ---\",\n    \"data\": [\n      {\n        \"site\": \"LPCH\",\n        \"employees\": [\n          {\n            \"id\": \"123\",\n            \"name\": \"AJ\",\n            \"trade\": \"Carpenter\"\n          },\n          {\n            \"id\": \"123\",\n            \"name\": \"AJ\",\n            \"trade\": \"Carpenter\"\n          },\n          {\n            \"id\": \"123\",\n            \"name\": \"AJ\",\n            \"trade\": \"Carpenter\"\n          }\n        ]\n      },\n      {\n        \"site\": \"BioMarin PG\",\n        \"employees\": [\n          {\n            \"id\": \"123\",\n            \"name\": \"AJ\",\n            \"trade\": \"Carpenter\"\n          },\n          {\n            \"id\": \"123\",\n            \"name\": \"AJ\",\n            \"trade\": \"Carpenter\"\n          },\n          {\n            \"id\": \"123\",\n            \"name\": \"AJ\",\n            \"trade\": \"Carpenter\"\n          }\n        ]\n      }\n    ]\n  }\n}";
 
 var dispatchBoardTestingString = "{\r\n  \"rtype\": \"DispatchBoardReport\",\r\n  \"rdata\": {\r\n    \"title\": \"Week from --- to ---\",\r\n    \"data\": [\r\n      {\r\n        \"site\": \"LPCH\",\r\n        \"employees\": [\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"site\": \"BioMarin PG\",\r\n        \"employees\": [\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"site\": \"LPCH\",\r\n        \"employees\": [\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"site\": \"LPCH\",\r\n        \"employees\": [\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"site\": \"LPCH\",\r\n        \"employees\": [\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}";
 
 
 var mu = require('mu2'); 
 
-mu.root = __dirname + '/templates'
+mu.root = __dirname + TEMPLATES_PATH;
 
 var server = app.listen(process.env.PORT || 3000, function () {
 
   var host = server.address().address;
   var port = server.address().port;
-  console.log('template chya aai cha path-', mu.root);
   console.log('Example app listening at http://%s:%s', host, port);
-
 });
 
 app.get('/pussy', function (req, res) {
@@ -86,18 +88,8 @@ function GenerateDispatchBoardReport(jsonObj, res) {
 
 
         dataNode.employeesArray = function() {
-        //console.log(JSON.stringify(employees));
             return this.employees.map(function (employee) {
-                var color = "#ffffff";
-                if (employee.trade.toLowerCase() == "Carpenter".toLowerCase()) {
-                    color = "#66ffff";
-                } else if (employee.trade.toLowerCase() == "Mason".toLowerCase()) {
-                    color = "#ffff00";
-                } else if (employee.trade.toLowerCase() == "Laborer".toLowerCase()) {
-                    color = "#66ff66";
-                }
-                
-                employee.color = color;
+                employee.color = getEmployeeColorCode(employee);
                 return employee;
             });
         };
@@ -108,93 +100,27 @@ function GenerateDispatchBoardReport(jsonObj, res) {
             .on('data', function (renderedData) {
                 renderedHtml += renderedData.toString();
             })
-            .on('end', function (){
-                //console.log(renderedHtml.toString());
-                //res.contentType('text/html');
-                //console.log(renderedHtml);
+            .on('end', function () {
                 conversion({ html: renderedHtml }, function(err, pdf) {
-                    //console.log(pdf.numberOfPages);
                     res.setHeader("Content-Type", "application/pdf");
                     pdf.stream.pipe(res);
                 });
-                //res.send(renderedHtml);
             });
 }
 
 function getJobHours(job) {
-    var totalHours = 0
+    var days = ['sat', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri'];
+    var time = ['ot', 'dt', 'st'];
+    var totalHours = 0;
     var hours;
-    hours = job.hours.sat.ot;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.sat.dt;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.sun.dt;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.mon.st;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.mon.ot;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.mon.dt;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.tue.st;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.tue.ot;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.tue.dt;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.wed.st;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.wed.ot;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.wed.dt;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.thu.st;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.thu.ot;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.thu.dt;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.fri.st;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.fri.ot;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
-    }
-    hours = job.hours.fri.dt;
-    if (isNumeric(hours)) {
-        totalHours += Number(hours);
+
+    for (var i = 0; i < days.length; i++) {
+        for (var j = 0; j < time.length; j++) {
+            hours = job.hours[days[i]][time[j]];
+            if (isNumeric(hours)) {
+                totalHours += Number(hours);
+            }
+        }
     }
 
     return totalHours;
@@ -239,6 +165,20 @@ function GenerateReportEmployeeWeeklyTimecard(jsonObj, res) {
     );
 }
 
+//Returns employee colors code according to trade
+function getEmployeeColorCode(employee) {
+    var color = COLOR_DEFAULT;
+    if (employee.trade.toLowerCase() == "Carpenter".toLowerCase()) {
+        color = COLOR_CARPETER;
+    } else if (employee.trade.toLowerCase() == "Mason".toLowerCase()) {
+        color = COLOR_MASON;
+    } else if (employee.trade.toLowerCase() == "Laborer".toLowerCase()) {
+        color = COLOR_LABORER;
+    }
+
+    return color;
+}
+
 function GenerateReportEmployeeWeeklyDispatch(jsonObj, res) {
 
     jsonObj.rdata.header_color = "#6495ed";
@@ -252,16 +192,8 @@ function GenerateReportEmployeeWeeklyDispatch(jsonObj, res) {
     // add color according to trade
     jsonObj.rdata.data.employeesArray = function() {
         return this.employees.map(function (employee) {
-            var color = "#ffffff";
-            if (employee.trade.toLowerCase() == "Carpenter".toLowerCase()) {
-                color = "#66ffff";
-            } else if (employee.trade.toLowerCase() == "Mason".toLowerCase()) {
-                color = "#ffff00";
-            } else if (employee.trade.toLowerCase() == "Laborer".toLowerCase()) {
-                color = "#66ff66";
-            }
-                
-            employee.color = color;
+            employee.color = getEmployeeColorCode(employee);
+            console.log("" + employee.color);
             return employee;
         });
     };
@@ -272,7 +204,6 @@ function GenerateReportEmployeeWeeklyDispatch(jsonObj, res) {
             renderedHtml += renderedData.toString();
         })
         .on('end', function () {
-            //console.log(renderedHtml);
             conversion({ html: renderedHtml }, function(err, pdf) {
                 console.log(pdf.numberOfPages);
                 res.setHeader("Content-Type", "application/pdf");
