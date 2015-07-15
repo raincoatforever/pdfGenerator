@@ -5,18 +5,23 @@ var app = express();
 var conversion = require("phantom-html-to-pdf")();
 
 //Constants
+
+// make sure report type matches template file name
 var DISPATCH_BOARD_REPORT = "DispatchBoardReport";
-var REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH = "employeeWeeklyDispatch";
-var REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD = "employeeWeeklyTimecard";
+var REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH = "EmployeeWeeklyDispatch";
+var REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD = "EmployeeWeeklyTimecard";
 var TABLE_HEADER_NAME = "Name";
 var TABLE_HEADER_TRADE = "Trade";
 var TABLE_HEADER_EMPLOYEE_ID = "Employee ID";
 var TEMPLATES_PATH = "/templates";
 
-var COLOR_DEFAULT = "#ffffff";
-var COLOR_CARPETER = "#66ffff";
-var COLOR_MASON = "#ffff00";
-var COLOR_LABORER = "#66ff66";
+var CARPENTER = "Carpenter";
+var MASON = "Mason";
+var LABORER = "Laborer";
+var DEFAULT = "Default";
+var HEADER = "Header";
+
+var COLOR = {"Carpenter": "#66ffff", "Mason": "#ffff00", "Laborer": "#66ff66", "Default": "#ffffff", "Header": "#6495ed"};
 
 var jsonObjForConversion = "{\"rtype\":\"employeeWeeklyDispatch\",\r\n\"rdata\":{\"title\":\"Employee Dispatch Report : Bay Area Concrete\", \"week_range\":\"Week Ending 2015-06-13\",\"data\":{\"dates\":[\"Sun 6\/7\",\"Mon 6\/8\",\"Tue 6\/9\",\"Wed 6\/10\", \"Thu 6\/11\", \"Fri 6\/12\", \"Sat 6\/13\"], \"employees\":[{\"emp_id\": 131000,\"trade\":\"Carpenter\", \"name\":\"Alexis Romero\",\"work_sites\":[{\"date\":\"Sun 6\/7\", \"site\": \"\"},{\"date\": \"Mon 6\/8\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Tue 6\/9\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Wed 6\/10\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Thu 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Fri 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Sat 6\/12\", \"site\":\"Genentech 9 Seismic Upgrade\"}]},{\"emp_id\": 131899,\"trade\":\"Mason\", \"name\":\"Alvaro Diaz\",\"work_sites\":[{\"date\":\"Sun 6\/7\", \"site\": \"\"},{\"date\": \"Mon 6\/8\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Tue 6\/9\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Wed 6\/10\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Thu 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Fri 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Sat 6\/12\", \"site\":\"Genentech 9 Seismic Upgrade\"}]}]}}}"; 
 
@@ -95,17 +100,33 @@ function GenerateDispatchBoardReport(jsonObj, res) {
         };
     }
 
+    generatePdfAndRespond(DISPATCH_BOARD_REPORT, jsonObj.rdata, null, res);
+}
+
+/* @params
+  template - file name of the template to be used
+  data - json object to use to render template
+  customPaperSize - map containing the paper size, 'null' for default size (for accepted map values http://phantomjs.org/api/webpage/property/paper-size.html)
+  response - response to be used to send pdf back to caller
+*/
+function generatePdfAndRespond(template, data, customPaperSize, response) {
     var renderedHtml = "";
-        mu.compileAndRender('DispatchBoardReport.html', jsonObj.rdata)
-            .on('data', function (renderedData) {
-                renderedHtml += renderedData.toString();
-            })
-            .on('end', function () {
-                conversion({ html: renderedHtml }, function(err, pdf) {
-                    res.setHeader("Content-Type", "application/pdf");
-                    pdf.stream.pipe(res);
-                });
+    mu.compileAndRender(template + '.html', data)
+        .on('data', function (renderedData) {
+            renderedHtml += renderedData.toString();
+        })
+        .on('end', function () {
+            var opt = {};
+            opt.html = renderedHtml;
+            if (customPaperSize != null) {
+                opt.paperSize = customPaperSize;
+            }
+
+            conversion(opt, function(err, pdf) {
+                response.setHeader("Content-Type", "application/pdf");
+                pdf.stream.pipe(response);
             });
+        });
 }
 
 function getJobHours(job) {
@@ -145,43 +166,28 @@ function GenerateReportEmployeeWeeklyTimecard(jsonObj, res) {
             employee.jobs[j].jobHours = getJobHours(employee.jobs[j]);
             totalHours += Number(employee.jobs[j].jobHours);
         }
-
         employee.totalHours = totalHours;
     }
 
-    var renderedHtml = "";
-    mu.compileAndRender('EmployeeWeeklyTimecard.html', jsonObj.rdata)
-        .on('data', function (renderedData) {
-            renderedHtml += renderedData.toString();
-        })
-        .on('end', function () {
-            //console.log(renderedHtml);
-            conversion({ html: renderedHtml, paperSize: {margin:"0.5cm", orientation:"landscape", format:"A3"}}, function(err, pdf) {
-                console.log(pdf.numberOfPages);
-                res.setHeader("Content-Type", "application/pdf");
-                pdf.stream.pipe(res);
-            });
-        }
-    );
+    generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD, jsonObj.rdata, {margin:"0.5cm", orientation:"landscape", format:"A3"}, res);
 }
 
 //Returns employee colors code according to trade
 function getEmployeeColorCode(employee) {
-    var color = COLOR_DEFAULT;
-    if (employee.trade.toLowerCase() == "Carpenter".toLowerCase()) {
-        color = COLOR_CARPETER;
-    } else if (employee.trade.toLowerCase() == "Mason".toLowerCase()) {
-        color = COLOR_MASON;
-    } else if (employee.trade.toLowerCase() == "Laborer".toLowerCase()) {
-        color = COLOR_LABORER;
+    var color = COLOR.DEFAULT;
+    if (employee.trade.toLowerCase() == CARPENTER.toLowerCase()) {
+        color = COLOR[CARPENTER];
+    } else if (employee.trade.toLowerCase() == MASON.toLowerCase()) {
+        color = COLOR[MASON];
+    } else if (employee.trade.toLowerCase() == LABORER.toLowerCase()) {
+        color = COLOR[LABORER];
     }
-
     return color;
 }
 
 function GenerateReportEmployeeWeeklyDispatch(jsonObj, res) {
 
-    jsonObj.rdata.header_color = "#6495ed";
+    jsonObj.rdata.header_color = COLOR[HEADER];
     // convert array to map-array
     jsonObj.rdata.data.datesArray = function() {
         return this.dates.map(function (date) {
@@ -193,22 +199,9 @@ function GenerateReportEmployeeWeeklyDispatch(jsonObj, res) {
     jsonObj.rdata.data.employeesArray = function() {
         return this.employees.map(function (employee) {
             employee.color = getEmployeeColorCode(employee);
-            console.log("" + employee.color);
             return employee;
         });
     };
 
-    var renderedHtml = "";
-    mu.compileAndRender('EmployeeWeeklyDispatch.html', jsonObj.rdata)
-        .on('data', function (renderedData) {
-            renderedHtml += renderedData.toString();
-        })
-        .on('end', function () {
-            conversion({ html: renderedHtml }, function(err, pdf) {
-                console.log(pdf.numberOfPages);
-                res.setHeader("Content-Type", "application/pdf");
-                pdf.stream.pipe(res);
-            });
-        }
-    );
+    generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH, jsonObj.rdata, null, res);
 }
