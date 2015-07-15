@@ -89,6 +89,14 @@ function createHTMLFromJSON(jsonData, res) {
 }
 
 function generateDispatchBoardReport(jsonObj, res) {
+    
+    jsonObj.rdata.offEmployeesArray = function() {
+        return this.off.map(function (employee) {
+            employee.color = getEmployeeColorCode(employee);
+            return employee;
+        });
+    };
+
     for( var i=0; i < jsonObj.rdata.data.length; i++) {
 
         var dataNode = jsonObj.rdata.data[i];

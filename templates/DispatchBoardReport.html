@@ -9,7 +9,7 @@
 	<script type="text/javascript">
 
 	$("body").ready(function () {
-    $("table").each(function () {
+    $("#main-data").each(function () {
         var $this = $(this);
         var newrows = [];
         $this.find("tr").each(function () {
@@ -37,16 +37,28 @@
 	<body>
 		<h3>{{title}}</h3>
 
-		<table class="table table-bordered">
+		<table id="main-data" class="table table-bordered">
 			{{#data}}
 			<tr>
-				<td>{{site}}</td>
+				<td style="background-color:#FF99CC !important;">{{site}}</td>
 			{{#employeesArray}}
 				<td style="background-color:{{color}} !important;">{{name}} <br> {{id}}</td>
 			{{/employeesArray}}
 			</tr>
 			{{/data}}
 		</table>
+
+
+		<table class="table table-bordered ">
+			<th style="max-width: 15px !important;"> Off </th>
+	    	{{#offEmployeesArray}}
+	    	<tr>	    		
+				<td style="background-color:{{color}} !important; word-wrap: break-word !important;max-width: 15px !important;">
+					{{name}} <br> {{id}}
+				</td>
+			</tr>
+	    	{{/offEmployeesArray}}
+	    </table>
 
 
 	</body>
