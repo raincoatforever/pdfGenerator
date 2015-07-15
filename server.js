@@ -90,7 +90,6 @@ function createHTMLFromJSON(jsonData, res) {
 
 function generateDispatchBoardReport(jsonObj, res) {
     
-    //console.log( JSON.stringify(jsonObj.rdata.off) );
     jsonObj.rdata.offEmployeesArray = function() {
         return this.off.map(function (employee) {
             employee.color = getEmployeeColorCode(employee);
