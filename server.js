@@ -19,14 +19,16 @@ var CARPENTER = "Carpenter";
 var MASON = "Mason";
 var LABORER = "Laborer";
 var DEFAULT = "Default";
-var HEADER = "Header";
+var WEEKLY_DISPATCH_HEADER = "weeklyDispatchHeader";
+var WEEKLY_TIMECARD_HEADER = "weeklyTimecardHeader";
 
 var COLOR = {};
 COLOR[CARPENTER] = "#66ffff";
 COLOR[MASON] = "#ffff00";
 COLOR[LABORER] = "#66ff66";
 COLOR[DEFAULT] = "#ffffff";
-COLOR[HEADER] = "#6495ed";
+COLOR[WEEKLY_DISPATCH_HEADER] = "#6495ed";
+COLOR[WEEKLY_TIMECARD_HEADER] = "#bdbdbd";
 
 var jsonObjForConversion = "{\"rtype\":\"employeeWeeklyDispatch\",\r\n\"rdata\":{\"title\":\"Employee Dispatch Report : Bay Area Concrete\", \"week_range\":\"Week Ending 2015-06-13\",\"data\":{\"dates\":[\"Sun 6\/7\",\"Mon 6\/8\",\"Tue 6\/9\",\"Wed 6\/10\", \"Thu 6\/11\", \"Fri 6\/12\", \"Sat 6\/13\"], \"employees\":[{\"emp_id\": 131000,\"trade\":\"Carpenter\", \"name\":\"Alexis Romero\",\"work_sites\":[{\"date\":\"Sun 6\/7\", \"site\": \"\"},{\"date\": \"Mon 6\/8\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Tue 6\/9\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Wed 6\/10\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Thu 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Fri 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Sat 6\/12\", \"site\":\"Genentech 9 Seismic Upgrade\"}]},{\"emp_id\": 131899,\"trade\":\"Mason\", \"name\":\"Alvaro Diaz\",\"work_sites\":[{\"date\":\"Sun 6\/7\", \"site\": \"\"},{\"date\": \"Mon 6\/8\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Tue 6\/9\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Wed 6\/10\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Thu 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Fri 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Sat 6\/12\", \"site\":\"Genentech 9 Seismic Upgrade\"}]}]}}}"; 
 
@@ -75,22 +77,18 @@ function createHTMLFromJSON(jsonData, res) {
     var htmlBody;
     switch(reportType.toLowerCase()) {
         case REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH.toLowerCase():
-            GenerateReportEmployeeWeeklyDispatch(jsonObj, res);
+            generateReportEmployeeWeeklyDispatch(jsonObj, res);
             break;
         case DISPATCH_BOARD_REPORT.toLowerCase():
-            GenerateDispatchBoardReport(jsonObj, res);
+            generateDispatchBoardReport(jsonObj, res);
             break;
         case REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD.toLowerCase():
-            GenerateReportEmployeeWeeklyTimecard(jsonObj, res);
+            generateReportEmployeeWeeklyTimecard(jsonObj, res);
             break;
     }
 }
 
-function GenerateDispatchBoardReport(jsonObj, res) {
-
-    console.log(JSON.stringify(jsonObj));
-    console.log(jsonObj.rdata.data);
-
+function generateDispatchBoardReport(jsonObj, res) {
     for( var i=0; i < jsonObj.rdata.data.length; i++) {
 
         var dataNode = jsonObj.rdata.data[i];
@@ -137,14 +135,14 @@ function generatePdfAndRespond(template, data, customPaperSize, response) {
 function getJobHours(job) {
     var days = ['sat', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri'];
     var time = ['ot', 'dt', 'st'];
-    var totalHours = 0;
+    var totalHours = [0 ,0 ,0]; // 0 - ot, 1 - dt, 2 - st
     var hours;
 
     for (var i = 0; i < days.length; i++) {
         for (var j = 0; j < time.length; j++) {
             hours = job.hours[days[i]][time[j]];
             if (isNumeric(hours)) {
-                totalHours += Number(hours);
+                totalHours[j] += Number(hours);
             }
         }
     }
@@ -156,24 +154,36 @@ function isNumeric(num) {
     return !isNaN(num);
 }
 
-function GenerateReportEmployeeWeeklyTimecard(jsonObj, res) {
+function generateReportEmployeeWeeklyTimecard(jsonObj, res) {
+    var jobHours;
     for (var i = 0; i < jsonObj.rdata.data.employees.length; i++) {
-        var totalHours = 0;
+        var totalHours = [0, 0, 0];
         var employee = jsonObj.rdata.data.employees[i];
         employee.noOfJobs = employee.jobs.length;
 
         var firstJob = employee.jobs.splice(0, 1);
         employee.firstJob = firstJob[0];
-        employee.firstJob.jobHours = getJobHours(employee.firstJob);
-        totalHours += Number(employee.firstJob.jobHours);
+        jobHours = getJobHours(employee.firstJob);
+        employee.firstJob.jobHours = Number(jobHours[0]) + Number(jobHours[1]) + Number(jobHours[2]);
+        totalHours[0] += Number(jobHours[0]);
+        totalHours[1] += Number(jobHours[1]);
+        totalHours[2] += Number(jobHours[2]);
         
         for (var j = 0; j < employee.noOfJobs - 1; j++) {
-            employee.jobs[j].jobHours = getJobHours(employee.jobs[j]);
-            totalHours += Number(employee.jobs[j].jobHours);
+            jobHours = getJobHours(employee.jobs[j]);
+            employee.jobs[j].jobHours = Number(jobHours[0]) + Number(jobHours[1]) + Number(jobHours[2]);
+            totalHours[0] += Number(jobHours[0]);
+            totalHours[1] += Number(jobHours[1]);
+            totalHours[2] += Number(jobHours[2]);
         }
-        employee.totalHours = totalHours;
+
+        employee.totalOtHours = totalHours[0];
+        employee.totalDtHours = totalHours[1];
+        employee.totalStHours = totalHours[2];
+        employee.totalHours = totalHours[0] + totalHours[1] + totalHours[2];
     }
 
+    jsonObj.rdata.header_color = COLOR[WEEKLY_TIMECARD_HEADER];
     generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD, jsonObj.rdata, {margin:"0.5cm", orientation:"landscape", format:"A3"}, res);
 }
 
@@ -190,9 +200,9 @@ function getEmployeeColorCode(employee) {
     return color;
 }
 
-function GenerateReportEmployeeWeeklyDispatch(jsonObj, res) {
+function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
 
-    jsonObj.rdata.header_color = COLOR[HEADER];
+    jsonObj.rdata.header_color = COLOR[WEEKLY_DISPATCH_HEADER];
     // convert array to map-array
     jsonObj.rdata.data.datesArray = function() {
         return this.dates.map(function (date) {

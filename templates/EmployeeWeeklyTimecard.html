@@ -7,63 +7,77 @@
 	</head>
 	<body>
 		{{#data}}
+		<table class="table table-bordered text-center">
+			{{#days}}
+			<tr>
+				<td align="right" width="25%">WORK WEEK BEGINNING SATURDAY:</td>
+				<td width="10%">{{sat}}/{{year}}</td>
+				<td rowspan="2" align="center" width="65%"><h1>{{title}}<br>WEEKLY TIMECARD</h1></td>
+			</tr>
+			<tr>
+				<td align="right" width="20%">WORK WEEK BEGINNING SATURDAY:</td>
+				<td width="10%">{{sat}}/{{year}}</td>
+			</tr>
+			{{/days}}
+		</table>
+		<!--  -->
 		{{#employees}}
 		<table class="table table-bordered text-center">
 			<tr>
-				<th rowspan="3">Employee<br>Name</th>
-				<th rowspan="3">Job<br>Name</th> 
-				<th rowspan="3">Job<br>Number</th> 
-				<th rowspan="3">Phase<br>Code</th>
-				<th rowspan="3">Phase Code<br>Description</th>
-				<th rowspan="3">Loc-<br>ation</th>
-				<th rowspan="3">Task</th>
+				<th rowspan="3" style="background-color:{{header_color}} !important;">Employee<br>Name</th>
+				<th rowspan="3" style="background-color:{{header_color}} !important;">Job<br>Name</th>
+				<th rowspan="3" style="background-color:{{header_color}} !important;">Job<br>Number</th>
+				<th rowspan="3" style="background-color:{{header_color}} !important;">Phase<br>Code</th>
+				<th rowspan="3" style="background-color:{{header_color}} !important;">Phase Code<br>Description</th>
+				<th rowspan="3" style="background-color:{{header_color}} !important;">Loc-<br>ation</th>
+				<th rowspan="3" style="background-color:{{header_color}} !important;">Task</th>
 				{{#days}}
-				<th colspan="2">{{sat}}</th>
-				<th>{{sun}}</th>
-				<th colspan="3">{{mon}}</th>
-				<th colspan="3">{{tue}}</th>
-				<th colspan="3">{{wed}}</th>
-				<th colspan="3">{{thu}}</th>
-				<th colspan="3">{{fri}}</th>
+				<th colspan="2" style="background-color:{{header_color}} !important;">{{sat}}</th>
+				<th style="background-color:{{header_color}} !important;">{{sun}}</th>
+				<th colspan="3" style="background-color:{{header_color}} !important;">{{mon}}</th>
+				<th colspan="3" style="background-color:{{header_color}} !important;">{{tue}}</th>
+				<th colspan="3" style="background-color:{{header_color}} !important;">{{wed}}</th>
+				<th colspan="3" style="background-color:{{header_color}} !important;">{{thu}}</th>
+				<th colspan="3" style="background-color:{{header_color}} !important;">{{fri}}</th>
 				{{/days}}
-				<th rowspan="3">T#</th>
-				<th rowspan="3">Notes</th>
+				<th rowspan="3" style="background-color:{{header_color}} !important;">T#</th>
+				<th rowspan="3" style="background-color:{{header_color}} !important;">Notes</th>
 			</tr>
 			<tr>
-				<th colspan="2">Sat</th>
-				<th>Sun</th>
-				<th colspan="3">Mon</th>
-				<th colspan="3">Tue</th>
-				<th colspan="3">Wed</th>
-				<th colspan="3">Thu</th>
-				<th colspan="3">Fri</th>
+				<th colspan="2" style="background-color:{{header_color}} !important;">Sat</th>
+				<th style="background-color:{{header_color}} !important;">Sun</th>
+				<th colspan="3" style="background-color:{{header_color}} !important;">Mon</th>
+				<th colspan="3" style="background-color:{{header_color}} !important;">Tue</th>
+				<th colspan="3" style="background-color:{{header_color}} !important;">Wed</th>
+				<th colspan="3" style="background-color:{{header_color}} !important;">Thu</th>
+				<th colspan="3" style="background-color:{{header_color}} !important;">Fri</th>
 			</tr>
 			<tr>
 				<!-- Sat -->
-				<th class="text-center" style="padding:1px; !important">OT</th>
-				<th class="text-center" style="padding:1px; !important">DT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">OT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">DT</th>
 				<!-- Sun -->
-				<th class="text-center" style="padding:1px; !important">DT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">DT</th>
 				<!-- Mon -->
-				<th class="text-center" style="padding:1px; !important">ST</th>
-				<th class="text-center" style="padding:1px; !important">OT</th>
-				<th class="text-center" style="padding:1px; !important">DT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">ST</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">OT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">DT</th>
 				<!-- Tue -->
-				<th class="text-center" style="padding:1px; !important">ST</th>
-				<th class="text-center" style="padding:1px; !important">OT</th>
-				<th class="text-center" style="padding:1px; !important">DT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">ST</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">OT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">DT</th>
 				<!-- Wed -->
-				<th class="text-center" style="padding:1px; !important">ST</th>
-				<th class="text-center" style="padding:1px; !important">OT</th>
-				<th class="text-center" style="padding:1px; !important">DT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">ST</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">OT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">DT</th>
 				<!-- Thu -->
-				<th class="text-center" style="padding:1px; !important">ST</th>
-				<th class="text-center" style="padding:1px; !important">OT</th>
-				<th class="text-center" style="padding:1px; !important">DT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">ST</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">OT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">DT</th>
 				<!-- Fri -->
-				<th class="text-center" style="padding:1px; !important">ST</th>
-				<th class="text-center" style="padding:1px; !important">OT</th>
-				<th class="text-center" style="padding:1px; !important">DT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">ST</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">OT</th>
+				<th class="text-center" style="background-color:{{header_color}} !important; padding:1px !important;">DT</th>
 			</tr>
 			{{#firstJob}}
 			<tr>
@@ -172,6 +186,14 @@
 				<td>{{notes}}</td>
 			</tr>
 			{{/jobs}}
+			<tr>
+				<td colspan="22" align="right" style="color:#ff0000 !important">Total Hours</td>
+				<td style="color:#ff0000 !important">{{totalStHours}}</td>
+				<td style="color:#ff0000 !important">{{totalOtHours}}</td>
+				<td style="color:#ff0000 !important">{{totalDtHours}}</td>
+				<td style="color:#ff0000 !important">{{totalHours}}</td>
+				<td></td>
+			</tr>
 		</table>
 		{{/employees}}
 		{{/data}}
