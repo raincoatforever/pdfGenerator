@@ -92,8 +92,6 @@ function generateDispatchBoardReport(jsonObj, res) {
     for( var i=0; i < jsonObj.rdata.data.length; i++) {
 
         var dataNode = jsonObj.rdata.data[i];
-        console.log(JSON.stringify(dataNode.site));
-
 
         dataNode.employeesArray = function() {
             return this.employees.map(function (employee) {
