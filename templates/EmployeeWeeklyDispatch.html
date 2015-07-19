@@ -15,17 +15,17 @@
 				<th style="background-color:{{header_color}} !important;">Name</th>
 				<th style="background-color:{{header_color}} !important;">Trade</th>
 				<th style="background-color:{{header_color}} !important;">Employee</th>
-				{{#datesArray}} 
-				<th style="background-color:{{header_color}} !important;">{{src}}</th> 
-				{{/datesArray}}
+				{{#datesHeader}}
+				<th style="background-color:{{header_color}} !important;">{{header}}</th>
+				{{/datesHeader}}
 			</tr>
 			{{#employeesArray}}
 			<tr>
-				<td>{{name}}</td>
+				<td style="padding:0px !important;">{{name}}</td>
 				<td style="background-color:{{color}} !important;">{{trade}}</td>
 				<td>{{emp_id}}</td>
 				{{#work_sites}}
-				<td>{{site}}</td>
+				<td style="padding:0px !important;">{{site}}</td>
 				{{/work_sites}}
 			</tr>
 			{{/employeesArray}}

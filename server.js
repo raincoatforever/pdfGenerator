@@ -7,7 +7,7 @@ var conversion = require("phantom-html-to-pdf")();
 //Constants
 
 // make sure report type matches template file name
-var DISPATCH_BOARD_REPORT = "DispatchBoardReport";
+var REPORT_TYPE_DISPATCH_BOARD = "DispatchBoardReport";
 var REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH = "EmployeeWeeklyDispatch";
 var REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD = "EmployeeWeeklyTimecard";
 var TABLE_HEADER_NAME = "Name";
@@ -79,7 +79,7 @@ function createHTMLFromJSON(jsonData, res) {
         case REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH.toLowerCase():
             generateReportEmployeeWeeklyDispatch(jsonObj, res);
             break;
-        case DISPATCH_BOARD_REPORT.toLowerCase():
+        case REPORT_TYPE_DISPATCH_BOARD.toLowerCase():
             generateDispatchBoardReport(jsonObj, res);
             break;
         case REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD.toLowerCase():
@@ -109,7 +109,7 @@ function generateDispatchBoardReport(jsonObj, res) {
         };
     }
 
-    generatePdfAndRespond(DISPATCH_BOARD_REPORT, jsonObj.rdata, null, res);
+    generatePdfAndRespond(REPORT_TYPE_DISPATCH_BOARD, jsonObj.rdata, null, res);
 }
 
 /* @params
@@ -209,12 +209,18 @@ function getEmployeeColorCode(employee) {
 function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
 
     jsonObj.rdata.header_color = COLOR[WEEKLY_DISPATCH_HEADER];
-    // convert array to map-array
-    jsonObj.rdata.data.datesArray = function() {
-        return this.dates.map(function (date) {
-            return {src: date};
-        });
+    
+    var datesHeader = [];
+    var employee = jsonObj.rdata.data.employees[0];
+    if (employee != null) {
+        var work_sites = employee.work_sites;
+        // TODO: sort dates here
+        for (var i = 0; i < work_sites.length; i++) {
+            datesHeader[i] = {header : work_sites[i].day + " " + work_sites[i].date};
+        }
     };
+
+    jsonObj.rdata.data.datesHeader = datesHeader;
 
     // add color according to trade
     jsonObj.rdata.data.employeesArray = function() {
@@ -224,5 +230,6 @@ function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
         });
     };
 
-    generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH, jsonObj.rdata, null, res);
+    var options = {margin:"0.5cm", orientation:"landscape", format:"A3"};
+    generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH, jsonObj.rdata, options, res);
 }
