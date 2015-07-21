@@ -222,6 +222,7 @@ function generateReportEmployeeWeeklyTimecard(jsonObj, res) {
         var totalHours = [0, 0, 0];
         var employee = jsonObj.rdata.data.employees[i];
         employee.noOfJobs = employee.jobs.length;
+        employee.color = getEmployeeColorCode(employee);
 
         var firstJob = employee.jobs.splice(0, 1);
         employee.firstJob = firstJob[0];
