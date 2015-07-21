@@ -92,50 +92,59 @@ function createHTMLFromJSON(jsonData, res) {
     }
 }
 
+function separateEmployeesAccordingToTrade(site) {
+    var carpenters = [];
+    var masons = [];
+    var laborers = [];
+    var cCount = mCount = lCount = 0;
+    for (var j = 0; j < site.employees.length; j++) {
+        var employee = site.employees[j];
+        employee.color = getEmployeeColorCode(employee); // get color according to trade
+        if (employee.trade.toLowerCase() == CARPENTER.toLowerCase()) {
+            carpenters[cCount] = employee;
+            cCount++;
+        } else if (employee.trade.toLowerCase() == MASON.toLowerCase()) {
+            masons[mCount] = employee;
+            mCount++;
+        } else if (employee.trade.toLowerCase() == LABORER.toLowerCase()) {
+            laborers[lCount] = employee;
+            lCount++;
+        }
+    }
+
+    var max = Math.max(cCount, lCount, mCount);
+    site.rows = [];
+    for (var j = 0; j < max; j++) {
+        var carpenter = carpenters[j];
+        var mason = masons[j];
+        var laborer = laborers[j];
+        site.rows[j] = {};
+        if (carpenter != null) {
+            site.rows[j].carpenter = carpenter;
+        }
+        if (mason != null) {
+            site.rows[j].mason = mason;
+        }
+        if (laborer != null) {
+            site.rows[j].laborer = laborer;
+        }
+    }
+
+    return site;
+}
+
 function generateDispatchBoardReport(jsonObj, res) {
     var sites = jsonObj.rdata.data.sites;
     var pages = [];
     var page = [];
     var pageCount = -1;
+
+    var offEmployees = {};
+    offEmployees.site = "Off";
+    offEmployees.employees = jsonObj.rdata.data.off;
+    sites.push(offEmployees);
     for (var i = 0; i < sites.length; i++) {
-        var site = sites[i];
-        var carpenters = [];
-        var masons = [];
-        var laborers = [];
-        var cCount = mCount = lCount = 0;
-        for (var j = 0; j < site.employees.length; j++) {
-            var employee = site.employees[j];
-            employee.color = getEmployeeColorCode(employee); // get color according to trade
-            if (employee.trade.toLowerCase() == CARPENTER.toLowerCase()) {
-                carpenters[cCount] = employee;
-                cCount++;
-            } else if (employee.trade.toLowerCase() == MASON.toLowerCase()) {
-                masons[mCount] = employee;
-                mCount++;
-            } else if (employee.trade.toLowerCase() == LABORER.toLowerCase()) {
-                laborers[lCount] = employee;
-                lCount++;
-            }
-        }
-
-        var max = Math.max(cCount, lCount, mCount);
-        site.rows = [];
-        for (var j = 0; j < max; j++) {
-            var carpenter = carpenters[j];
-            var mason = masons[j];
-            var laborer = laborers[j];
-            site.rows[j] = {};
-            if (carpenter != null) {
-                site.rows[j].carpenter = carpenter;
-            }
-            if (mason != null) {
-                site.rows[j].mason = mason;
-            }
-            if (laborer != null) {
-                site.rows[j].laborer = laborer;
-            }
-        }
-
+        var site = separateEmployeesAccordingToTrade(sites[i]);
         if ((i % 4) == 0) {
             if (pageCount != -1) {
                 pages.push({"page": page});
@@ -143,7 +152,6 @@ function generateDispatchBoardReport(jsonObj, res) {
             }
             pageCount++;
         }
-
         page.push(site);
     }
 
