@@ -144,10 +144,6 @@ function generateDispatchBoardReport(jsonObj, res) {
     offEmployees.employees = jsonObj.rdata.data.off;
     sites.push(offEmployees);
 
-
-
-
-
     for (var i = 0; i < sites.length; i++) {
         sites[i].employees = sites[i].employees.sort(function(emp_a, emp_b) {
             return cmp(
