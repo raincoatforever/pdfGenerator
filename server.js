@@ -30,6 +30,8 @@ COLOR[DEFAULT] = "#ffffff";
 COLOR[WEEKLY_DISPATCH_HEADER] = "#6495ed";
 COLOR[WEEKLY_TIMECARD_HEADER] = "#bdbdbd";
 
+var OPTIONS_A3_LANDSCAPE = {margin:"0.5cm", orientation:"landscape", format:"A3"};
+
 var jsonObjForConversion = "{\"rtype\":\"employeeWeeklyDispatch\",\r\n\"rdata\":{\"title\":\"Employee Dispatch Report : Bay Area Concrete\", \"week_range\":\"Week Ending 2015-06-13\",\"data\":{\"dates\":[\"Sun 6\/7\",\"Mon 6\/8\",\"Tue 6\/9\",\"Wed 6\/10\", \"Thu 6\/11\", \"Fri 6\/12\", \"Sat 6\/13\"], \"employees\":[{\"emp_id\": 131000,\"trade\":\"Carpenter\", \"name\":\"Alexis Romero\",\"work_sites\":[{\"date\":\"Sun 6\/7\", \"site\": \"\"},{\"date\": \"Mon 6\/8\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Tue 6\/9\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Wed 6\/10\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Thu 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Fri 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Sat 6\/12\", \"site\":\"Genentech 9 Seismic Upgrade\"}]},{\"emp_id\": 131899,\"trade\":\"Mason\", \"name\":\"Alvaro Diaz\",\"work_sites\":[{\"date\":\"Sun 6\/7\", \"site\": \"\"},{\"date\": \"Mon 6\/8\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Tue 6\/9\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Wed 6\/10\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Thu 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Fri 6\/11\", \"site\":\"Genentech 9 Seismic Upgrade\"},{\"date\": \"Sat 6\/12\", \"site\":\"Genentech 9 Seismic Upgrade\"}]}]}}}"; 
 
 var dispatchBoardTestingString = "{\r\n  \"rtype\": \"DispatchBoardReport\",\r\n  \"rdata\": {\r\n    \"title\": \"Week from --- to ---\",\r\n    \"data\": [\r\n      {\r\n        \"site\": \"LPCH\",\r\n        \"employees\": [\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"site\": \"BioMarin PG\",\r\n        \"employees\": [\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"site\": \"LPCH\",\r\n        \"employees\": [\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"site\": \"LPCH\",\r\n        \"employees\": [\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"site\": \"LPCH\",\r\n        \"employees\": [\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          },\r\n          {\r\n            \"id\": \"123\",\r\n            \"name\": \"AJ\",\r\n            \"trade\": \"Carpenter\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}";
@@ -47,7 +49,6 @@ var server = app.listen(process.env.PORT || 3000, function () {
 });
 
 app.get('/pussy', function (req, res) {
-
   var jsonPostBody = dispatchBoardTestingString.toString();
   console.log(jsonPostBody);
   createHTMLFromJSON(jsonPostBody.toString(), res);
@@ -69,13 +70,9 @@ app.post('/pdfGenerate', function(req, res){
     });
 });
 
-
-cmp=function(x, y){
+cmp = function(x, y) {
     return x > y ? 1 : x < y ? -1 : 0; 
 };
-
-
-
 
 function createHTMLFromJSON(jsonData, res) {
     var jsonObj = JSON.parse(jsonData);
@@ -96,27 +93,63 @@ function createHTMLFromJSON(jsonData, res) {
 }
 
 function generateDispatchBoardReport(jsonObj, res) {
-    
-    jsonObj.rdata.offEmployeesArray = function() {
-        return this.off.map(function (employee) {
-            employee.color = getEmployeeColorCode(employee);
-            return employee;
-        });
-    };
+    var sites = jsonObj.rdata.data.sites;
+    var pages = [];
+    var page = [];
+    var pageCount = -1;
+    for (var i = 0; i < sites.length; i++) {
+        var site = sites[i];
+        var carpenters = [];
+        var masons = [];
+        var laborers = [];
+        var cCount = mCount = lCount = 0;
+        for (var j = 0; j < site.employees.length; j++) {
+            var employee = site.employees[j];
+            employee.color = getEmployeeColorCode(employee); // get color according to trade
+            if (employee.trade.toLowerCase() == CARPENTER.toLowerCase()) {
+                carpenters[cCount] = employee;
+                cCount++;
+            } else if (employee.trade.toLowerCase() == MASON.toLowerCase()) {
+                masons[mCount] = employee;
+                mCount++;
+            } else if (employee.trade.toLowerCase() == LABORER.toLowerCase()) {
+                laborers[lCount] = employee;
+                lCount++;
+            }
+        }
 
-    for( var i=0; i < jsonObj.rdata.data.length; i++) {
+        var max = Math.max(cCount, lCount, mCount);
+        site.rows = [];
+        for (var j = 0; j < max; j++) {
+            var carpenter = carpenters[j];
+            var mason = masons[j];
+            var laborer = laborers[j];
+            site.rows[j] = {};
+            if (carpenter != null) {
+                site.rows[j].carpenter = carpenter;
+            }
+            if (mason != null) {
+                site.rows[j].mason = mason;
+            }
+            if (laborer != null) {
+                site.rows[j].laborer = laborer;
+            }
+        }
 
-        var dataNode = jsonObj.rdata.data[i];
+        if ((i % 4) == 0) {
+            if (pageCount != -1) {
+                pages.push({"page": page});
+                page = [];
+            }
+            pageCount++;
+        }
 
-        dataNode.employeesArray = function() {
-            return this.employees.map(function (employee) {
-                employee.color = getEmployeeColorCode(employee);
-                return employee;
-            });
-        };
+        page.push(site);
     }
 
-    generatePdfAndRespond(REPORT_TYPE_DISPATCH_BOARD, jsonObj.rdata, null, res);
+    pages.push({"page": page});
+    jsonObj.rdata.data.pages = pages;
+    generatePdfAndRespond(REPORT_TYPE_DISPATCH_BOARD, jsonObj.rdata, OPTIONS_A3_LANDSCAPE, res);
 }
 
 /* @params
@@ -197,7 +230,8 @@ function generateReportEmployeeWeeklyTimecard(jsonObj, res) {
     }
 
     jsonObj.rdata.header_color = COLOR[WEEKLY_TIMECARD_HEADER];
-    generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD, jsonObj.rdata, {margin:"0.5cm", orientation:"landscape", format:"A3"}, res);
+    var options =  {margin:"0.5cm", orientation:"landscape", format:"A3"};
+    generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD, jsonObj.rdata, options, res);
 }
 
 //Returns employee colors code according to trade
@@ -214,9 +248,6 @@ function getEmployeeColorCode(employee) {
 }
 
 function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
-
-    jsonObj.rdata.header_color = COLOR[WEEKLY_DISPATCH_HEADER];
-    
     var datesHeader = [];
 
     jsonObj.rdata.data.employees=jsonObj.rdata.data.employees.sort(function(emp_a, emp_b) {
@@ -255,6 +286,6 @@ function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
         });
     };
 
-    var options = {margin:"0.5cm", orientation:"landscape", format:"A3"};
-    generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH, jsonObj.rdata, options, res);
+    jsonObj.rdata.header_color = COLOR[WEEKLY_DISPATCH_HEADER];
+    generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH, jsonObj.rdata, OPTIONS_A3_LANDSCAPE, res);
 }

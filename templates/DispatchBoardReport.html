@@ -5,62 +5,30 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-	<script type="text/javascript">
-
-	$("body").ready(function () {
-    $("#main-data").each(function () {
-        var $this = $(this);
-        var newrows = [];
-        $this.find("tr").each(function () {
-            var i = 0;
-            $(this).find("td,th").each(function () {
-                i++;
-                if (newrows[i] === undefined) {
-                    newrows[i] = $("<tr></tr>");
-                }
-                newrows[i].append($(this));
-            });
-        });
-        $this.find("tr").remove();
-        $.each(newrows, function () {
-            $this.append(this);
-        });
-    });
-
-    return false;
-});
-
-		</script>
 	</head>
 	
 	<body>
+		{{#data}}
 		<h3>{{title}}</h3>
-
-		<table id="main-data" class="table table-bordered">
-			{{#data}}
+		{{#pages}}
+		{{#page}}
+		<table id="main-data" class="table table-bordered" style="width:20%;float:left;">
 			<tr>
-				<td style="background-color:#FF99CC !important;">{{site}}</td>
-			{{#employeesArray}}
-				<td style="background-color:{{color}} !important;">{{name}} <br> {{id}}</td>
-			{{/employeesArray}}
+				<td align="center" colspan="3" style="background-color:#FF99CC !important;">{{site}}</td>
 			</tr>
-			{{/data}}
+			{{#rows}}
+			<tr>
+				{{#carpenter}}<td style="background-color:{{color}} !important; width:33%;">{{name}}<br>{{id}}</td>{{/carpenter}}
+				{{#mason}}<td style="background-color:{{color}} !important; width:33%;">{{name}}<br>{{id}}</td>{{/mason}}
+				{{#laborer}}<td style="background-color:{{color}} !important; width:34%;">{{name}}<br>{{id}}</td>{{/laborer}}
+			</tr>
+			{{/rows}}
 		</table>
-
-
-		<table class="table table-bordered ">
-			<th style="max-width: 15px !important;"> Off </th>
-	    	{{#offEmployeesArray}}
-	    	<tr>	    		
-				<td style="background-color:{{color}} !important; word-wrap: break-word !important;max-width: 15px !important;">
-					{{name}} <br> {{id}}
-				</td>
-			</tr>
-	    	{{/offEmployeesArray}}
-	    </table>
-
-
+		{{/page}}
+		<br/>
+		<p style="page-break-after:always;"></p>
+		{{/pages}}
+		{{/data}}
 	</body>
 
 </html>
