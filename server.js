@@ -219,16 +219,16 @@ function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
     
     var datesHeader = [];
 
-    jsonObj.rdata.data.employees=jsonObj.rdata.data.employees.sort(function(a, b) {
+    jsonObj.rdata.data.employees=jsonObj.rdata.data.employees.sort(function(emp_a, emp_b) {
             return cmp(
-                 [cmp(a.trade, b.trade), cmp(a.name, b.name)], 
-                 [cmp(b.trade, a.trade), cmp(b.name, a.name)]
+                 [cmp(emp_a.trade, emp_b.trade), cmp(emp_a.name, emp_b.name)], 
+                 [cmp(emp_b.trade, emp_a.trade), cmp(emp_b.name, emp_a.name)]
                 );
     });
 
     jsonObj.rdata.data.employees.forEach( function(employee) {
-        employee.work_sites.sort(function(a, b) {
-            return cmp( new Date(a.date) , new Date(b.date) );
+        employee.work_sites.sort(function(work_site_a, work_site_b) {
+            return cmp( new Date(work_site_a.date) , new Date(work_site_b.date) );
         });
     });
 
