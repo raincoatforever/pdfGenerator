@@ -70,6 +70,13 @@ app.post('/pdfGenerate', function(req, res){
 });
 
 
+cmp=function(x, y){
+    return x > y ? 1 : x < y ? -1 : 0; 
+};
+
+
+
+
 function createHTMLFromJSON(jsonData, res) {
     var jsonObj = JSON.parse(jsonData);
     var reportType = jsonObj.rtype;
@@ -211,9 +218,27 @@ function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
     jsonObj.rdata.header_color = COLOR[WEEKLY_DISPATCH_HEADER];
     
     var datesHeader = [];
+
+    jsonObj.rdata.data.employees=jsonObj.rdata.data.employees.sort(function(a, b) {
+            return cmp(
+                 [cmp(a.trade, b.trade), cmp(a.name, b.name)], 
+                 [cmp(b.trade, a.trade), cmp(b.name, a.name)]
+                );
+    });
+
+    jsonObj.rdata.data.employees.forEach( function(employee) {
+        employee.work_sites.sort(function(a, b) {
+            return cmp( new Date(a.date) , new Date(b.date) );
+        });
+    });
+
     var employee = jsonObj.rdata.data.employees[0];
     if (employee != null) {
+
+
         var work_sites = employee.work_sites;
+
+
         // TODO: sort dates here
         for (var i = 0; i < work_sites.length; i++) {
             datesHeader[i] = {header : work_sites[i].day + " " + work_sites[i].date};
