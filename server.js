@@ -202,6 +202,14 @@ function isNumeric(num) {
 
 function generateReportEmployeeWeeklyTimecard(jsonObj, res) {
     var jobHours;
+
+    jsonObj.rdata.data.employees=jsonObj.rdata.data.employees.sort(function(emp_a, emp_b) {
+            return cmp(
+                 [cmp(emp_a.trade, emp_b.trade), cmp(emp_a.emp_name, emp_b.emp_name)], 
+                 [cmp(emp_b.trade, emp_a.trade), cmp(emp_b.emp_name, emp_a.emp_name)]
+                );
+    });
+
     for (var i = 0; i < jsonObj.rdata.data.employees.length; i++) {
         var totalHours = [0, 0, 0];
         var employee = jsonObj.rdata.data.employees[i];
