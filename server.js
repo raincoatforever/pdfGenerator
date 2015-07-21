@@ -143,7 +143,14 @@ function generateDispatchBoardReport(jsonObj, res) {
     offEmployees.site = "Off";
     offEmployees.employees = jsonObj.rdata.data.off;
     sites.push(offEmployees);
+
     for (var i = 0; i < sites.length; i++) {
+        sites[i].employees = sites[i].employees.sort(function(emp_a, emp_b) {
+            return cmp(
+                 [cmp(emp_a.trade, emp_b.trade), cmp(emp_a.emp_name, emp_b.emp_name)], 
+                 [cmp(emp_b.trade, emp_a.trade), cmp(emp_b.emp_name, emp_a.emp_name)]
+                );
+        });
         var site = separateEmployeesAccordingToTrade(sites[i]);
         if ((i % 4) == 0) {
             if (pageCount != -1) {
