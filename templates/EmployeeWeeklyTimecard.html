@@ -82,12 +82,12 @@
 			{{#firstJob}}
 			<tr>
 				<td rowspan="{{noOfJobs}}" style="background-color:{{color}} !important;" align="left">{{emp_name}}</td>
-				<td>{{name}}</td>
-				<td>{{number}}</td>
-				<td>{{phase_code}}</td>
-				<td>{{phase_code_desc}}</td>
-				<td>{{location}}</td>
-				<td>{{task}}</td>
+				<td>{{job_name}}</td>
+				<td>{{job_number}}</td>
+				<td>{{job_phase_code}}</td>
+				<td>{{job_phase_code_desc}}</td>
+				<td>{{job_location}}</td>
+				<td>{{job_task}}</td>
 				{{#hours}}
 				<!-- Sat -->
 				{{#sat}}
@@ -135,12 +135,12 @@
 			{{/firstJob}}
 			{{#jobs}}
 			<tr>
-				<td>{{name}}</td> 
-				<td>{{number}}</td> 
-				<td>{{phase_code}}</td>
-				<td>{{phase_code_desc}}</td>
-				<td>{{location}}</td>
-				<td>{{task}}</td>
+				<td>{{job_name}}</td>
+				<td>{{job_number}}</td>
+				<td>{{job_phase_code}}</td>
+				<td>{{job_phase_code_desc}}</td>
+				<td>{{job_location}}</td>
+				<td>{{job_task}}</td>
 				{{#hours}}
 				<!-- Sat -->
 				{{#sat}}
@@ -195,6 +195,7 @@
 				<td></td>
 			</tr>
 		</table>
+		<br>
 		{{/employees}}
 		{{/data}}
 	</body>
