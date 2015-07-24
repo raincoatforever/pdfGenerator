@@ -140,7 +140,7 @@ function generateDispatchBoardReport(jsonObj, res) {
     var pageCount = -1;
 
     var offEmployees = {};
-    offEmployees.site = "Off";
+    offEmployees.site_name = "Off";
     offEmployees.employees = jsonObj.rdata.data.off;
     sites.push(offEmployees);
 
@@ -254,8 +254,7 @@ function generateReportEmployeeWeeklyTimecard(jsonObj, res) {
     }
 
     jsonObj.rdata.header_color = COLOR[WEEKLY_TIMECARD_HEADER];
-    var options =  {margin:"0.5cm", orientation:"landscape", format:"A3"};
-    generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD, jsonObj.rdata, options, res);
+    generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD, jsonObj.rdata, OPTIONS_A3_LANDSCAPE, res);
 }
 
 //Returns employee colors code according to trade
@@ -276,8 +275,8 @@ function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
 
     jsonObj.rdata.data.employees=jsonObj.rdata.data.employees.sort(function(emp_a, emp_b) {
             return cmp(
-                 [cmp(emp_a.trade, emp_b.trade), cmp(emp_a.name, emp_b.name)], 
-                 [cmp(emp_b.trade, emp_a.trade), cmp(emp_b.name, emp_a.name)]
+                 [cmp(emp_a.trade, emp_b.trade), cmp(emp_a.emp_name, emp_b.emp_name)],
+                 [cmp(emp_b.trade, emp_a.trade), cmp(emp_b.emp_name, emp_a.emp_name)]
                 );
     });
 
@@ -289,12 +288,7 @@ function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
 
     var employee = jsonObj.rdata.data.employees[0];
     if (employee != null) {
-
-
         var work_sites = employee.work_sites;
-
-
-        // TODO: sort dates here
         for (var i = 0; i < work_sites.length; i++) {
             datesHeader[i] = {header : work_sites[i].day + " " + work_sites[i].date};
         }
