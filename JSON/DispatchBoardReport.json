@@ -1,1 +1,457 @@
-{"rtype":"DispatchBoardReport","rdata":{"title":"Weekly Dispatch Report", "data":{"sites":[{"site_name":"LPCH", "employees":[{"emp_id":"123", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Mason"},{"emp_id":"456", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Laborer"},{"emp_id":"789", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"}]},{"site_name":"LPCH", "employees":[{"emp_id":"123", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Mason"},{"emp_id":"456", "emp_name":"Ajinkya", "trade":"Laborer"},{"emp_id":"789", "emp_name":"Ajinkya", "trade":"Carpenter"}]},{"site_name":"LPCH", "employees":[{"emp_id":"123", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Mason"},{"emp_id":"456", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Laborer"},{"emp_id":"789", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"}]},{"site_name":"LPCH", "employees":[{"emp_id":"123", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Mason"},{"emp_id":"456", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Laborer"},{"emp_id":"789", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"}]},{"site_name":"LPCH", "employees":[{"emp_id":"123", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Mason"},{"emp_id":"456", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Laborer"},{"emp_id":"789", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"}]},{"site_name":"BioMarin PG", "employees":[{"emp_id":"111", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"},{"emp_id":"222", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"},{"emp_id":"333", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"}]},{"site_name":"LPCH", "employees":[{"emp_id":"123", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Mason"},{"emp_id":"456", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Laborer"},{"emp_id":"789", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"}]},{"site_name":"BioMarin PG", "employees":[{"emp_id":"111", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"},{"emp_id":"222", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"},{"emp_id":"333", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"}]},{"site_name":"LPCH", "employees":[{"emp_id":"123", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Mason"},{"emp_id":"456", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Laborer"},{"emp_id":"789", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"}]},{"site_name":"BioMarin PG", "employees":[{"emp_id":"111", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"},{"emp_id":"222", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"},{"emp_id":"333", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"}]}],"off":[{"emp_id":"123", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Mason"},{"emp_id":"456", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Laborer"},{"emp_id":"789", "emp_name":"ARGEL TORRES MADRIGAL", "trade":"Carpenter"}]}}}
+{
+  "rtype": "DispatchBoardReport",
+  "rdata": {
+    "reports": [
+      {
+        "title": "Weekly Dispatch Report",
+        "date": "mm-dd-yyyy",
+        "data": {
+          "sites": [
+            {
+              "site_name": "LPCH",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "Ajinkya",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "Ajinkya",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "BioMarin PG",
+              "employees": [
+                {
+                  "emp_id": "111",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "222",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "333",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "BioMarin PG",
+              "employees": [
+                {
+                  "emp_id": "111",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "222",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "333",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "BioMarin PG",
+              "employees": [
+                {
+                  "emp_id": "111",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "222",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "333",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            }
+          ],
+          "off": [
+            {
+              "emp_id": "123",
+              "emp_name": "ARGEL TORRES MADRIGAL",
+              "trade": "Mason"
+            },
+            {
+              "emp_id": "456",
+              "emp_name": "ARGEL TORRES MADRIGAL",
+              "trade": "Laborer"
+            },
+            {
+              "emp_id": "789",
+              "emp_name": "ARGEL TORRES MADRIGAL",
+              "trade": "Carpenter"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Weekly Dispatch Report 2",
+        "date": "nn-dd-yyyy",
+        "data": {
+          "sites": [
+            {
+              "site_name": "LPCH2",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH2",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "Ajinkya",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "Ajinkya",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH2",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH2",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH2",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "BioMarin PG",
+              "employees": [
+                {
+                  "emp_id": "111",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "222",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "333",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH2",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "BioMarin PG2",
+              "employees": [
+                {
+                  "emp_id": "111",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "222",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "333",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "LPCH2",
+              "employees": [
+                {
+                  "emp_id": "123",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Mason"
+                },
+                {
+                  "emp_id": "456",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Laborer"
+                },
+                {
+                  "emp_id": "789",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            },
+            {
+              "site_name": "BioMarin PG2",
+              "employees": [
+                {
+                  "emp_id": "111",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "222",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                },
+                {
+                  "emp_id": "333",
+                  "emp_name": "ARGEL TORRES MADRIGAL",
+                  "trade": "Carpenter"
+                }
+              ]
+            }
+          ],
+          "off": [
+            {
+              "emp_id": "123",
+              "emp_name": "ARGEL TORRES MADRIGAL",
+              "trade": "Mason"
+            },
+            {
+              "emp_id": "456",
+              "emp_name": "ARGEL TORRES MADRIGAL",
+              "trade": "Laborer"
+            },
+            {
+              "emp_id": "789",
+              "emp_name": "ARGEL TORRES MADRIGAL",
+              "trade": "Carpenter"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

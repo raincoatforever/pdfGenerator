@@ -190,7 +190,6 @@ function generatePdfAndRespond(template, data, customPaperSize, response) {
         .on('end', function () {
             var opt = {};
             opt.html = renderedHtml;
-            console.log(renderedHtml);
             if (customPaperSize != null) {
                 opt.paperSize = customPaperSize;
             }
