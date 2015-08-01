@@ -9,8 +9,8 @@
 	<body>
 		<h3>{{title}}</h3>
 		<h4>{{week_range}}</h4>
+		{{#data}}
 		<table class="table table-bordered">
-			{{#data}}
 			<tr>
 				<th style="background-color:{{header_color}} !important;">Name</th>
 				<th style="background-color:{{header_color}} !important;">Trade</th>
@@ -24,13 +24,14 @@
 				<td style="padding:1px !important;">{{emp_name}}</td>
 				<td style="background-color:{{color}} !important;">{{trade}}</td>
 				<td>{{emp_id}}</td>
-				{{#work_sites}}
+				{{#work}}
 				<td style="padding:0px !important;">{{site_name}}</td>
-				{{/work_sites}}
+				{{/work}}
 			</tr>
 			{{/employeesArray}}
-			{{/data}}
 		</table>
+		<br/>
+		<p style="page-break-after:always;"></p>
+		{{/data}}
 	</body>
-
 </html>

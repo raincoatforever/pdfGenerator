@@ -271,8 +271,8 @@ function getEmployeeColorCode(employee) {
 }
 
 function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
-    var datesHeader = [];
 
+    // sort employees acc to trade and name
     jsonObj.rdata.data.employees=jsonObj.rdata.data.employees.sort(function(emp_a, emp_b) {
             return cmp(
                  [cmp(emp_a.trade, emp_b.trade), cmp(emp_a.emp_name, emp_b.emp_name)],
@@ -280,30 +280,57 @@ function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
                 );
     });
 
+    // sort work_sites acc to dates
     jsonObj.rdata.data.employees.forEach( function(employee) {
         employee.work_sites.sort(function(work_site_a, work_site_b) {
             return cmp( new Date(work_site_a.date) , new Date(work_site_b.date) );
         });
     });
 
+    var data = [];
+    var datesHeader = [];
+    var datesCount = 0;
+    var pageCount = 0;
     var employee = jsonObj.rdata.data.employees[0];
     if (employee != null) {
         var work_sites = employee.work_sites;
         for (var i = 0; i < work_sites.length; i++) {
-            datesHeader[i] = {header : work_sites[i].day + " " + work_sites[i].date};
+            datesHeader[datesCount] = {header : work_sites[i].day + " " + work_sites[i].date};
+            datesCount++;
+
+            if ((i % 7) == 6) {
+                data[pageCount] = {};
+                data[pageCount].datesHeader = datesHeader;
+                datesHeader = [];
+                datesCount = 0;
+                pageCount++;
+            }
         }
-    };
 
-    jsonObj.rdata.data.datesHeader = datesHeader;
+        if ((i % 7) != 0) {
+            data[pageCount] = {};
+            data[pageCount].datesHeader =  datesHeader;
+            pageCount++;
+        }
+    }
 
-    // add color according to trade
-    jsonObj.rdata.data.employeesArray = function() {
-        return this.employees.map(function (employee) {
+    for (var i = 0; i < pageCount; i++) {
+        var employees = [];
+        for (var j = 0; j < jsonObj.rdata.data.employees.length; j++) {
+            employee = {};
+            employee = jsonObj.rdata.data.employees[j];
+            var start = i * 7;
+            var end = start + 7;
+            var tmpSites = employee.work_sites;
+            employee.work = tmpSites.slice(start, end);
             employee.color = getEmployeeColorCode(employee);
-            return employee;
-        });
-    };
+            employees[j] = employee;
+        }
 
+        data[i].employeesArray = employees;
+    }
+
+    jsonObj.rdata.data = data;
     jsonObj.rdata.header_color = COLOR[WEEKLY_DISPATCH_HEADER];
     generatePdfAndRespond(REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH, jsonObj.rdata, OPTIONS_A3_LANDSCAPE, res);
 }
