@@ -8,8 +8,9 @@
 	</head>
 	
 	<body>
-		{{#data}}
+		{{#reportArray}}
 		<h3>{{title}}</h3>
+		{{#data}}
 		{{#pages}}
 		{{#page}}
 		<table id="main-data" class="table table-bordered" style="width:20%;float:left;">
@@ -29,6 +30,7 @@
 		<p style="page-break-after:always;"></p>
 		{{/pages}}
 		{{/data}}
+		{{/reportArray}}
 	</body>
 
 </html>
