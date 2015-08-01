@@ -134,36 +134,43 @@ function separateEmployeesAccordingToTrade(site) {
 }
 
 function generateDispatchBoardReport(jsonObj, res) {
-    var sites = jsonObj.rdata.data.sites;
-    var pages = [];
-    var page = [];
-    var pageCount = -1;
 
-    var offEmployees = {};
-    offEmployees.site_name = "Off";
-    offEmployees.employees = jsonObj.rdata.data.off;
-    sites.push(offEmployees);
+    var reportArray  = jsonObj.rdata.reports;
+    
+    for(var j=0; j < reportArray.length; j++){
+        var pages = [];
+        var pageCount = -1;
+        var page= [];
+        var rdataElement = reportArray[j];
+        var offEmployees = {};
+        var sites = rdataElement.data.sites;
 
-    for (var i = 0; i < sites.length; i++) {
-        sites[i].employees = sites[i].employees.sort(function(emp_a, emp_b) {
-            return cmp(
-                 [cmp(emp_a.trade, emp_b.trade), cmp(emp_a.emp_name, emp_b.emp_name)], 
-                 [cmp(emp_b.trade, emp_a.trade), cmp(emp_b.emp_name, emp_a.emp_name)]
-                );
-        });
-        var site = separateEmployeesAccordingToTrade(sites[i]);
-        if ((i % 4) == 0) {
-            if (pageCount != -1) {
-                pages.push({"page": page});
-                page = [];
+        offEmployees.site_name = "Off";
+        offEmployees.employees = rdataElement.data.off;
+        sites.push(offEmployees);
+
+        for (var i = 0; i < sites.length; i++) {
+            sites[i].employees = sites[i].employees.sort(function(emp_a, emp_b) {
+                return cmp(
+                     [cmp(emp_a.trade, emp_b.trade), cmp(emp_a.emp_name, emp_b.emp_name)], 
+                     [cmp(emp_b.trade, emp_a.trade), cmp(emp_b.emp_name, emp_a.emp_name)]
+                    );
+            });
+            var site = separateEmployeesAccordingToTrade(sites[i]);
+            if ((i % 4) == 0) {
+                if (pageCount != -1) {
+                    pages.push({"page": page});
+                    page = [];
+                }
+                pageCount++;
             }
-            pageCount++;
+            page.push(site);
         }
-        page.push(site);
+
+        pages.push({"page": page});
+        rdataElement.data.pages = pages;
     }
 
-    pages.push({"page": page});
-    jsonObj.rdata.data.pages = pages;
     generatePdfAndRespond(REPORT_TYPE_DISPATCH_BOARD, jsonObj.rdata, OPTIONS_A3_LANDSCAPE, res);
 }
 
@@ -175,6 +182,7 @@ function generateDispatchBoardReport(jsonObj, res) {
 */
 function generatePdfAndRespond(template, data, customPaperSize, response) {
     var renderedHtml = "";
+
     mu.compileAndRender(template + '.html', data)
         .on('data', function (renderedData) {
             renderedHtml += renderedData.toString();
@@ -182,6 +190,7 @@ function generatePdfAndRespond(template, data, customPaperSize, response) {
         .on('end', function () {
             var opt = {};
             opt.html = renderedHtml;
+            console.log(renderedHtml);
             if (customPaperSize != null) {
                 opt.paperSize = customPaperSize;
             }
