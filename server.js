@@ -270,6 +270,10 @@ function getEmployeeColorCode(employee) {
     return color;
 }
 
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
 function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
 
     // sort employees acc to trade and name
@@ -318,7 +322,7 @@ function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
         var employees = [];
         for (var j = 0; j < jsonObj.rdata.data.employees.length; j++) {
             employee = {};
-            employee = jsonObj.rdata.data.employees[j];
+            employee = clone(jsonObj.rdata.data.employees[j]);
             var start = i * 7;
             var end = start + 7;
             var tmpSites = employee.work_sites;
