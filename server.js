@@ -10,9 +10,6 @@ var conversion = require("phantom-html-to-pdf")();
 var REPORT_TYPE_DISPATCH_BOARD = "DispatchBoardReport";
 var REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH = "EmployeeWeeklyDispatch";
 var REPORT_TYPE_EMPLOYEE_WEEKLY_TIMECARD = "EmployeeWeeklyTimecard";
-var TABLE_HEADER_NAME = "Name";
-var TABLE_HEADER_TRADE = "Trade";
-var TABLE_HEADER_EMPLOYEE_ID = "Employee ID";
 var TEMPLATES_PATH = "/templates";
 
 var CARPENTER = "Carpenter";
@@ -66,7 +63,13 @@ app.post('/pdfGenerate', function(req, res){
     });
     
     req.on('end', function() {
-        createHTMLFromJSON(jsonPostBody.toString(), res);  
+        try {
+            createHTMLFromJSON(jsonPostBody.toString(), res);
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+            res.end();
+        }
     });
 });
 
@@ -78,7 +81,6 @@ function createHTMLFromJSON(jsonData, res) {
     var jsonObj = JSON.parse(jsonData);
     var reportType = jsonObj.rtype;
 
-    var htmlBody;
     switch(reportType.toLowerCase()) {
         case REPORT_TYPE_EMPLOYEE_WEEKLY_DISPATCH.toLowerCase():
             generateReportEmployeeWeeklyDispatch(jsonObj, res);
@@ -96,8 +98,11 @@ function separateEmployeesAccordingToTrade(site) {
     var carpenters = [];
     var masons = [];
     var laborers = [];
-    var cCount = mCount = lCount = 0;
-    for (var j = 0; j < site.employees.length; j++) {
+    var cCount = 0;
+    var mCount = 0;
+    var lCount = 0;
+    var j;
+    for (j = 0; j < site.employees.length; j++) {
         var employee = site.employees[j];
         employee.color = getEmployeeColorCode(employee); // get color according to trade
         if (employee.trade.toLowerCase() == CARPENTER.toLowerCase()) {
@@ -114,18 +119,18 @@ function separateEmployeesAccordingToTrade(site) {
 
     var max = Math.max(cCount, lCount, mCount);
     site.rows = [];
-    for (var j = 0; j < max; j++) {
+    for (j = 0; j < max; j++) {
         var carpenter = carpenters[j];
         var mason = masons[j];
         var laborer = laborers[j];
         site.rows[j] = {};
-        if (carpenter != null) {
+        if (carpenter !== null && carpenter !== undefined) {
             site.rows[j].carpenter = carpenter;
         }
-        if (mason != null) {
+        if (mason !== null && mason !== undefined) {
             site.rows[j].mason = mason;
         }
-        if (laborer != null) {
+        if (laborer !== null && laborer !== undefined) {
             site.rows[j].laborer = laborer;
         }
     }
@@ -147,7 +152,9 @@ function generateDispatchBoardReport(jsonObj, res) {
 
         offEmployees.site_name = "Off";
         offEmployees.employees = rdataElement.data.off;
-        sites.push(offEmployees);
+        if(offEmployees.employees !== null && offEmployees.employees !== undefined) {
+            sites.push(offEmployees);
+        }
 
         for (var i = 0; i < sites.length; i++) {
             sites[i].employees = sites[i].employees.sort(function(emp_a, emp_b) {
@@ -190,7 +197,7 @@ function generatePdfAndRespond(template, data, customPaperSize, response) {
         .on('end', function () {
             var opt = {};
             opt.html = renderedHtml;
-            if (customPaperSize != null) {
+            if (customPaperSize !== null && customPaperSize !== undefined) {
                 opt.paperSize = customPaperSize;
             }
 
@@ -299,14 +306,16 @@ function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
         });
     });
 
+    var i;
     var data = [];
     var datesHeader = [];
     var datesCount = 0;
     var pageCount = 0;
     var employee = jsonObj.rdata.data.employees[0];
-    if (employee != null) {
+
+    if(employee !== null && employee !== undefined) {
         var work_sites = employee.work_sites;
-        for (var i = 0; i < work_sites.length; i++) {
+        for (i = 0; i < work_sites.length; i++) {
             datesHeader[datesCount] = {header : work_sites[i].day + " " + work_sites[i].date};
             datesCount++;
 
@@ -324,22 +333,22 @@ function generateReportEmployeeWeeklyDispatch(jsonObj, res) {
             data[pageCount].datesHeader =  datesHeader;
             pageCount++;
         }
-    }
 
-    for (var i = 0; i < pageCount; i++) {
-        var employees = [];
-        for (var j = 0; j < jsonObj.rdata.data.employees.length; j++) {
-            employee = {};
-            employee = clone(jsonObj.rdata.data.employees[j]);
-            var start = i * 7;
-            var end = start + 7;
-            var tmpSites = employee.work_sites;
-            employee.work = tmpSites.slice(start, end);
-            employee.color = getEmployeeColorCode(employee);
-            employees[j] = employee;
+        for (i = 0; i < pageCount; i++) {
+            var employees = [];
+            for (var j = 0; j < jsonObj.rdata.data.employees.length; j++) {
+                employee = {};
+                employee = clone(jsonObj.rdata.data.employees[j]);
+                var start = i * 7;
+                var end = start + 7;
+                var tmpSites = employee.work_sites;
+                employee.work = tmpSites.slice(start, end);
+                employee.color = getEmployeeColorCode(employee);
+                employees[j] = employee;
+            }
+
+            data[i].employeesArray = employees;
         }
-
-        data[i].employeesArray = employees;
     }
 
     jsonObj.rdata.data = data;
