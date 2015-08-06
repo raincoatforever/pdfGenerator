@@ -16,6 +16,7 @@ var CARPENTER = "Carpenter";
 var MASON = "Mason";
 var LABORER = "Laborer";
 var DEFAULT = "Default";
+var DISPATCH_BOARD_HEADER = "dispatchBoardHeader";
 var WEEKLY_DISPATCH_HEADER = "weeklyDispatchHeader";
 var WEEKLY_TIMECARD_HEADER = "weeklyTimecardHeader";
 
@@ -25,6 +26,7 @@ COLOR[MASON] = "#ffff00";
 COLOR[LABORER] = "#66ff66";
 COLOR[DEFAULT] = "#ffffff";
 COLOR[WEEKLY_DISPATCH_HEADER] = "#6495ed";
+COLOR[DISPATCH_BOARD_HEADER] = "#3968E9";
 COLOR[WEEKLY_TIMECARD_HEADER] = "#bdbdbd";
 
 var OPTIONS_A3_LANDSCAPE = {margin:"0.5cm", orientation:"landscape", format:"A3"};
@@ -178,6 +180,7 @@ function generateDispatchBoardReport(jsonObj, res) {
         rdataElement.data.pages = pages;
     }
 
+    jsonObj.rdata.header_color = COLOR[DISPATCH_BOARD_HEADER];
     generatePdfAndRespond(REPORT_TYPE_DISPATCH_BOARD, jsonObj.rdata, OPTIONS_A3_LANDSCAPE, res);
 }
 
