@@ -20,7 +20,6 @@
 			</tr>
 			{{/days}}
 		</table>
-		<!--  -->
 		{{#employees}}
 		<table class="table table-bordered text-center">
 			<tr>
@@ -130,7 +129,7 @@
 				{{/fri}}
 				{{/hours}}
 				<td>{{jobHours}}</td>
-				<td>{{notes}}</td>
+				<td rowspan="{{noOfJobs}}">{{notes}}</td>
 			</tr>
 			{{/firstJob}}
 			{{#jobs}}
@@ -183,7 +182,6 @@
 				{{/fri}}
 				{{/hours}}
 				<td>{{jobHours}}</td>
-				<td>{{notes}}</td>
 			</tr>
 			{{/jobs}}
 			<tr>
